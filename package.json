@@ -1,11 +1,12 @@
 {
   "name": "quran-institute-backend",
   "version": "1.0.0",
-  "description": "Backend for Quran Learning Institute",
-  "main": "src/server.js",
+  "description": "Backend for Quran Learning Institute - Netlify Functions",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "netlify": "netlify dev",
+    "build": "echo 'No build step required'"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -17,9 +18,9 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.3",
     "nodemailer": "^6.9.7",
-    "node-cron": "^3.0.3"
+    "serverless-http": "^3.2.0"
   },
   "devDependencies": {
-    "nodemon": "^3.0.2"
+    "netlify-cli": "^17.10.1"
   }
 }
