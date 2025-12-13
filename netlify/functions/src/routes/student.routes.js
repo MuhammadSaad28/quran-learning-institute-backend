@@ -12,5 +12,6 @@ router.get('/:id', protect, adminOnly, studentController.getStudentById);
 router.put('/:id', protect, adminOnly, studentController.updateStudent);
 router.delete('/:id', protect, adminOnly, studentController.deleteStudent);
 router.post('/:id/generate-schedules', protect, adminOnly, studentController.generateSchedules);
+router.post('/', protect, adminOnly, studentController.createStudent);
 
 module.exports = router;

@@ -19,7 +19,7 @@ const connectOnce = async () => {
 // CORS configuration
 const corsOptions = {
   origin: [
-    'https://quranlearninginstitutes.netlify.app',
+    'https://wisdomquranacademy.netlify.app',
     'http://localhost:5173',
     process.env.CLIENT_URL
   ].filter(Boolean),

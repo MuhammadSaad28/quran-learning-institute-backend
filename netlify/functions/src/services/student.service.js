@@ -120,4 +120,60 @@ const generateSchedulesForUser = async (userId) => {
   return generateSchedulesForStudent(student._id);
 };
 
-module.exports = { getAllStudents, getStudentById, getStudentByUserId, updateStudent, deleteStudent, getStudentSchedule, getNextClass, generateSchedulesForStudent, generateSchedulesForUser };
+const createStudentDirectly = async (data) => {
+  const { sendEmail } = require('../config/email');
+  const emailTemplates = require('../templates/email.templates');
+  const crypto = require('crypto');
+
+  const { name, email, phone, country, timezone, courseId, weeklySchedule, notes } = data;
+
+  const course = await Course.findById(courseId);
+  if (!course) throw { statusCode: 404, message: 'Course not found' };
+
+  let user = await User.findOne({ email });
+  const generatedPassword = crypto.randomBytes(4).toString('hex');
+
+  if (user) {
+    const existingStudent = await Student.findOne({ userId: user._id });
+    if (existingStudent) throw { statusCode: 400, message: 'Student already exists with this email' };
+    user.password = generatedPassword;
+    user.role = 'student';
+    await user.save();
+  } else {
+    user = await User.create({
+      name,
+      email,
+      phone,
+      password: generatedPassword,
+      timezone: timezone || 'UTC',
+      country: country || 'Unknown',
+      role: 'student',
+    });
+  }
+
+  const student = await Student.create({
+    userId: user._id,
+    courseId,
+    weeklySchedule,
+    notes,
+  });
+
+  await generateSchedulesForStudent(student._id);
+
+  await sendEmail(
+    email,
+    'Welcome to Quran Wisdom Academy!',
+    emailTemplates.studentCredentials({
+      name,
+      email,
+      password: generatedPassword,
+      courseName: course.title,
+      schedule: weeklySchedule,
+      loginUrl: `${process.env.CLIENT_URL}/login`,
+    })
+  );
+
+  return { user, student, message: 'Student created successfully' };
+};
+
+module.exports = { getAllStudents, getStudentById, getStudentByUserId, updateStudent, deleteStudent, getStudentSchedule, getNextClass, generateSchedulesForStudent, generateSchedulesForUser, createStudentDirectly };

@@ -6,7 +6,8 @@ const classScheduleSchema = new mongoose.Schema({
   dateTimeUTC: { type: Date, required: true },
   dateTimeUser: { type: String, required: true },
   meetingLink: { type: String },
-  status: { type: String, enum: ['scheduled', 'completed', 'cancelled'], default: 'scheduled' },
+  status: { type: String, enum: ['scheduled', 'completed', 'cancelled', 'absent'], default: 'scheduled' },
+  notes: { type: String },
   reminderSent: { type: Boolean, default: false },
 }, { timestamps: true });
 

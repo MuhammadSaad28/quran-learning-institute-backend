@@ -149,7 +149,7 @@ const convertToStudent = async (id, scheduleData) => {
   
   await sendEmail(
     request.email,
-    'Welcome to Quran Learning Institute!',
+    'Welcome to Quran Wisdom Academy!',
     emailTemplates.studentCredentials({
       name: request.name,
       email: request.email,

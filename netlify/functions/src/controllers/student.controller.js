@@ -81,4 +81,13 @@ const generateSchedules = async (req, res, next) => {
   }
 };
 
-module.exports = { getAllStudents, getStudentById, getMyProfile, updateStudent, deleteStudent, getMySchedule, getNextClass, generateMySchedules, generateSchedules };
+const createStudent = async (req, res, next) => {
+  try {
+    const result = await studentService.createStudentDirectly(req.body);
+    res.status(201).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { getAllStudents, getStudentById, getMyProfile, updateStudent, deleteStudent, getMySchedule, getNextClass, generateMySchedules, generateSchedules, createStudent };

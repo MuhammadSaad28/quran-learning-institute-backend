@@ -8,6 +8,8 @@ router.get('/upcoming', protect, scheduleController.getUpcomingSchedules);
 router.get('/', protect, adminOnly, scheduleController.getAllSchedules);
 router.post('/', protect, adminOnly, scheduleController.createSchedule);
 router.put('/:id', protect, adminOnly, scheduleController.updateSchedule);
+router.put('/:id/status', protect, adminOnly, scheduleController.updateClassStatus);
+router.put('/:id/reschedule', protect, adminOnly, scheduleController.rescheduleClass);
 router.delete('/:id', protect, adminOnly, scheduleController.deleteSchedule);
 
 module.exports = router;

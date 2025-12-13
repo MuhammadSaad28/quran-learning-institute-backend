@@ -20,12 +20,12 @@ const baseTemplate = (content) => `
 <body>
   <div class="container">
     <div class="header">
-      <h1>☪ Quran Learning Institute</h1>
+      <h1>☪ Quran Wisdom Academy</h1>
       <p>Illuminating Hearts with Divine Knowledge</p>
     </div>
     <div class="content">${content}</div>
     <div class="footer">
-      <p>© ${new Date().getFullYear()} Quran Learning Institute. All rights reserved.</p>
+      <p>© ${new Date().getFullYear()} Quran Wisdom Academy. All rights reserved.</p>
       <p>May Allah bless your journey of learning.</p>
     </div>
   </div>
@@ -66,7 +66,7 @@ const demoApproved = (data) => baseTemplate(`
 `);
 
 const studentCredentials = (data) => baseTemplate(`
-  <h2>Welcome to Quran Learning Institute! 🌟</h2>
+  <h2>Welcome to Quran Wisdom Academy! 🌟</h2>
   <p>Assalamu Alaikum ${data.name},</p>
   <p>Congratulations! You have been enrolled as a student. Here are your login credentials:</p>
   <div class="info-box">
@@ -105,4 +105,32 @@ const contactFormAdmin = (data) => baseTemplate(`
   <p>${data.message}</p>
 `);
 
-module.exports = { demoRequestAdmin, demoApproved, studentCredentials, classReminder, contactFormAdmin };
+const classStatusUpdate = (data) => baseTemplate(`
+  <h2>Class Status Update</h2>
+  <p>Assalamu Alaikum ${data.name},</p>
+  <p>Your class status has been updated:</p>
+  <div class="info-box">
+    <p><strong>Course:</strong> ${data.courseName}</p>
+    <p><strong>Class Time:</strong> ${data.classTime}</p>
+    <p><strong>Your Timezone:</strong> ${data.timezone || 'UTC'}</p>
+    <p><strong>Status:</strong> ${data.newStatus === 'completed' ? '✅ Completed' : '❌ Absent'}</p>
+    ${data.notes ? `<p><strong>Notes:</strong> ${data.notes}</p>` : ''}
+  </div>
+  <p>If you have any questions, please contact us.</p>
+`);
+
+const classRescheduled = (data) => baseTemplate(`
+  <h2>Class Rescheduled 📅</h2>
+  <p>Assalamu Alaikum ${data.name},</p>
+  <p>Your class has been rescheduled:</p>
+  <div class="info-box">
+    <p><strong>Course:</strong> ${data.courseName}</p>
+    <p><strong>Previous Time:</strong> <s>${data.oldDateTime}</s></p>
+    <p><strong>New Time:</strong> <span style="color: #1a5f4a; font-weight: bold;">${data.newDateTime}</span></p>
+    <p><strong>Your Timezone:</strong> ${data.timezone || 'UTC'}</p>
+    ${data.notes ? `<p><strong>Notes:</strong> ${data.notes}</p>` : ''}
+  </div>
+  <p>Please update your calendar accordingly. We look forward to seeing you!</p>
+`);
+
+module.exports = { demoRequestAdmin, demoApproved, studentCredentials, classReminder, contactFormAdmin, classStatusUpdate, classRescheduled };

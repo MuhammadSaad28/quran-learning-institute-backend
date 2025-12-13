@@ -54,4 +54,22 @@ const deleteSchedule = async (req, res, next) => {
   }
 };
 
-module.exports = { getAllSchedules, getMySchedules, getUpcomingSchedules, createSchedule, updateSchedule, deleteSchedule };
+const updateClassStatus = async (req, res, next) => {
+  try {
+    const result = await scheduleService.updateClassStatus(req.params.id, req.body);
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const rescheduleClass = async (req, res, next) => {
+  try {
+    const result = await scheduleService.rescheduleClass(req.params.id, req.body);
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { getAllSchedules, getMySchedules, getUpcomingSchedules, createSchedule, updateSchedule, deleteSchedule, updateClassStatus, rescheduleClass };
